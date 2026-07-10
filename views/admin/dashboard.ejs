@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CERDAS BERKARAKTER CMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple-900: #2D1B4E;
+            --purple-800: #3D2560;
+            --purple-700: #4A2D7A;
+            --purple-600: #5B2D8E;
+            --purple-500: #7B4BA8;
+            --pink-600: #D63384;
+            --pink-500: #E91E8C;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --success-light: #D1FAE5;
+            --warning: #F59E0B;
+            --warning-light: #FEF3C7;
+            --error: #EF4444;
+            --error-light: #FEE2E2;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            min-height: 100vh;
+        }
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 260px;
+            background: linear-gradient(180deg, var(--purple-900) 0%, var(--purple-800) 100%);
+            padding: 24px;
+            z-index: 100;
+        }
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-logo img { height: 40px; }
+        .sidebar-logo-text {
+            font-size: 1.125rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .sidebar-logo-text span { color: var(--pink-400); }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav-item {
+            margin-bottom: 8px;
+        }
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .sidebar-nav-link:hover, .sidebar-nav-link.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+        .sidebar-nav-link i { width: 20px; }
+        .sidebar-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.4);
+            padding: 16px 16px 8px;
+            margin-top: 16px;
+        }
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+        .top-bar {
+            background: var(--white);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .top-bar h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .top-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple-700) 0%, var(--pink-600) 100%);
+            color: var(--white);
+        }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(214, 51, 132, 0.4); }
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+        .btn-secondary:hover { background: var(--gray-200); }
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
+        .btn-danger { background: var(--error-light); color: var(--error); }
+        .btn-danger:hover { background: var(--error); color: var(--white); }
+        .page-content { padding: 32px; }
+        /* Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .stat-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        .stat-card-icon.purple { background: rgba(74, 45, 122, 0.1); color: var(--purple-700); }
+        .stat-card-icon.pink { background: rgba(230, 57, 132, 0.1); color: var(--pink-600); }
+        .stat-card-icon.green { background: var(--success-light); color: var(--success); }
+        .stat-card-icon.yellow { background: var(--warning-light); color: var(--warning); }
+        .stat-card-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .stat-card-label { color: var(--gray-500); font-size: 0.875rem; }
+        /* Content Sections */
+        .content-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .section-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        /* Table */
+        .table-container { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        th {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            font-weight: 600;
+            background: var(--gray-50);
+        }
+        td { font-size: 0.875rem; color: var(--gray-700); }
+        tr:hover td { background: var(--gray-50); }
+        .badge {
+            display: inline-flex;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+        }
+        .badge-success { background: var(--success-light); color: var(--success); }
+        .badge-warning { background: var(--warning-light); color: var(--warning); }
+        .badge-popular {
+            background: linear-gradient(135deg, var(--purple-700) 0%, var(--pink-600) 100%);
+            color: var(--white);
+        }
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .action-btn.edit { background: var(--gray-100); color: var(--gray-600); }
+        .action-btn.edit:hover { background: var(--purple-100); color: var(--purple-700); }
+        .action-btn.delete { background: var(--error-light); color: var(--error); }
+        .action-btn.delete:hover { background: var(--error); color: var(--white); }
+        /* Logout */
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-top: 24px;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+        /* View Site Link */
+        .view-site {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+        .view-site:hover { background: var(--gray-200); }
+        /* Mobile */
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+            .top-bar { padding: 16px; }
+            .page-content { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/assets/images/logo.png" alt="Logo" onerror="this.style.display='none'">
+            <span class="sidebar-logo-text">CERDAS<span>BERKARAKTER</span></span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item">
+                <a href="/admin/dashboard" class="sidebar-nav-link active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/hero" class="sidebar-nav-link">
+                    <i class="fas fa-image"></i> Hero Section
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-section-title">Konten</div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item">
+                <a href="/admin/modules" class="sidebar-nav-link">
+                    <i class="fas fa-puzzle-piece"></i> Modul
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/testimonials" class="sidebar-nav-link">
+                    <i class="fas fa-quote-left"></i> Testimoni
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/partners" class="sidebar-nav-link">
+                    <i class="fas fa-handshake"></i> Partner
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/pricing" class="sidebar-nav-link">
+                    <i class="fas fa-tags"></i> Harga
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-section-title">Pengaturan</div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item">
+                <a href="/admin/footer" class="sidebar-nav-link">
+                    <i class="fas fa-shoe-prints"></i> Footer
+                </a>
+            </li>
+        </ul>
+
+        <a href="/auth/logout" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="top-bar">
+            <h1>Dashboard</h1>
+            <div class="top-bar-actions">
+                <a href="/" target="_blank" class="view-site">
+                    <i class="fas fa-external-link-alt"></i> Lihat Website
+                </a>
+                <a href="/admin/modules" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Tambah Konten
+                </a>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-card-value"><%= modules.length %></div>
+                            <div class="stat-card-label">Modul Aktif</div>
+                        </div>
+                        <div class="stat-card-icon purple">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-card-value"><%= testimonials.length %></div>
+                            <div class="stat-card-label">Testimoni</div>
+                        </div>
+                        <div class="stat-card-icon pink">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-card-value"><%= partners.length %></div>
+                            <div class="stat-card-label">Partner</div>
+                        </div>
+                        <div class="stat-card-icon green">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-card-value"><%= pricing.length %></div>
+                            <div class="stat-card-label">Paket Harga</div>
+                        </div>
+                        <div class="stat-card-icon yellow">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modules -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2>Modul</h2>
+                    <a href="/admin/modules" class="btn btn-secondary btn-sm">Lihat Semua</a>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Judul</th>
+                                <th>Deskripsi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% modules.slice(0, 5).forEach(mod => { %>
+                            <tr>
+                                <td><strong><%= mod.title %></strong></td>
+                                <td><%= mod.description ? mod.description.substring(0, 80) + '...' : '-' %></td>
+                                <td><span class="badge badge-success">Aktif</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="content-section">
+                <div class="section-header">
+                    <h2>Paket Harga</h2>
+                    <a href="/admin/pricing" class="btn btn-secondary btn-sm">Lihat Semua</a>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Paket</th>
+                                <th>Harga</th>
+                                <th>Popular</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% pricing.forEach(pkg => { %>
+                            <tr>
+                                <td><strong><%= pkg.name %></strong></td>
+                                <td><%= pkg.price %></td>
+                                <td>
+                                    <% if (pkg.isPopular) { %>
+                                        <span class="badge badge-popular">Popular</span>
+                                    <% } else { %>
+                                        <span class="badge badge-warning">Standard</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

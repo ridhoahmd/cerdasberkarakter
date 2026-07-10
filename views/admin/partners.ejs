@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner - CERDAS BERKARAKTER CMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --purple-900: #2D1B4E;
+            --purple-700: #4A2D7A;
+            --pink-500: #E91E8C;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --error: #EF4444;
+            --error-light: #FEE2E2;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--gray-50); min-height: 100vh; }
+        .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 260px; background: linear-gradient(180deg, var(--purple-900) 0%, #3D2560 100%); padding: 24px; z-index: 100; }
+        .sidebar-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-logo img { height: 40px; }
+        .sidebar-logo-text { font-size: 1.125rem; font-weight: 800; color: var(--white); }
+        .sidebar-logo-text span { color: var(--pink-500); }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav-item { margin-bottom: 8px; }
+        .sidebar-nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; border-radius: 10px; transition: all 0.3s ease; font-weight: 500; }
+        .sidebar-nav-link:hover, .sidebar-nav-link.active { background: rgba(255,255,255,0.1); color: var(--white); }
+        .sidebar-section-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.4); padding: 16px 16px 8px; margin-top: 16px; }
+        .main-content { margin-left: 260px; min-height: 100vh; }
+        .top-bar { background: var(--white); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 50; }
+        .top-bar h1 { font-size: 1.5rem; font-weight: 700; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 0.875rem; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; }
+        .btn-primary { background: linear-gradient(135deg, var(--purple-700) 0%, var(--pink-500) 100%); color: var(--white); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(214, 51, 132, 0.4); }
+        .btn-secondary { background: var(--gray-100); color: var(--gray-700); }
+        .page-content { padding: 32px; }
+        .content-section { background: var(--white); border-radius: 16px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px; }
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--gray-200); }
+        th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); font-weight: 600; background: var(--gray-50); }
+        td { font-size: 0.875rem; }
+        .badge { display: inline-flex; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; border-radius: 20px; }
+        .badge-education { background: #EDE9FE; color: #7C3AED; }
+        .badge-banking { background: #DBEAFE; color: #2563EB; }
+        .badge-media { background: #FEF3C7; color: #D97706; }
+        .action-btns { display: flex; gap: 8px; }
+        .action-btn { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; gap: 6px; transition: all 0.3s ease; }
+        .action-btn.edit { background: var(--gray-200); color: var(--gray-700); }
+        .action-btn.edit:hover { background: var(--purple-700); color: var(--white); }
+        .action-btn.delete { background: var(--error-light); color: var(--error); }
+        .action-btn.delete:hover { background: var(--error); color: var(--white); }
+        .logout-btn { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; border-radius: 10px; transition: all 0.3s ease; margin-top: 24px; }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+        .modal { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+        .modal-content { position: relative; background: var(--white); border-radius: 16px; padding: 32px; width: 100%; max-width: 450px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-header h2 { font-size: 1.25rem; font-weight: 700; }
+        .modal-close { width: 32px; height: 32px; border-radius: 8px; border: none; background: var(--gray-100); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+        .form-input, .form-select { width: 100%; padding: 10px 14px; font-size: 0.9375rem; border: 2px solid var(--gray-200); border-radius: 8px; font-family: inherit; }
+        .form-input:focus, .form-select:focus { outline: none; border-color: var(--purple-700); }
+        .form-actions { display: flex; gap: 12px; margin-top: 24px; }
+        .form-actions .btn { flex: 1; justify-content: center; }
+        .toast { position: fixed; bottom: 24px; right: 24px; padding: 16px 24px; background: var(--gray-900); color: var(--white); border-radius: 8px; z-index: 2000; display: none; }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--error); }
+        .toast.show { display: block; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/assets/images/logo.png" alt="Logo" onerror="this.style.display='none'">
+            <span class="sidebar-logo-text">CERDAS<span>BERKARAKTER</span></span>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item"><a href="/admin/dashboard" class="sidebar-nav-link"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li class="sidebar-nav-item"><a href="/admin/hero" class="sidebar-nav-link"><i class="fas fa-image"></i> Hero Section</a></li>
+        </ul>
+        <div class="sidebar-section-title">Konten</div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item"><a href="/admin/modules" class="sidebar-nav-link"><i class="fas fa-puzzle-piece"></i> Modul</a></li>
+            <li class="sidebar-nav-item"><a href="/admin/testimonials" class="sidebar-nav-link"><i class="fas fa-quote-left"></i> Testimoni</a></li>
+            <li class="sidebar-nav-item"><a href="/admin/partners" class="sidebar-nav-link active"><i class="fas fa-handshake"></i> Partner</a></li>
+            <li class="sidebar-nav-item"><a href="/admin/pricing" class="sidebar-nav-link"><i class="fas fa-tags"></i> Harga</a></li>
+        </ul>
+        <div class="sidebar-section-title">Pengaturan</div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item"><a href="/admin/footer" class="sidebar-nav-link"><i class="fas fa-shoe-prints"></i> Footer</a></li>
+        </ul>
+        <a href="/auth/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <h1>Kelola Partner</h1>
+            <div style="display: flex; gap: 12px;">
+                <a href="/" target="_blank" class="btn btn-secondary"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
+                <button class="btn btn-primary" onclick="showAddModal()"><i class="fas fa-plus"></i> Tambah Partner</button>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="content-section">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>Website</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="partnersTable">
+                            <% partners.forEach((p, index) => { %>
+                            <tr data-id="<%= p.id %>">
+                                <td><%= index + 1 %></td>
+                                <td><strong><%= p.name %></strong></td>
+                                <td><span class="badge badge-<%= p.category %>"><%= p.category %></span></td>
+                                <td><%= p.websiteUrl || '-' %></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit" onclick="editPartner(<%= p.id %>)"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete" onclick="deletePartner(<%= p.id %>)"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="partnerModal">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Tambah Partner</h2>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="partnerForm" onsubmit="savePartner(event)">
+                <input type="hidden" id="partnerId">
+                <div class="form-group">
+                    <label class="form-label">Nama Partner *</label>
+                    <input type="text" class="form-input" id="partnerName" required placeholder="Contoh: Bank BCA">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kategori *</label>
+                    <select class="form-select" id="partnerCategory" required>
+                        <option value="education">Education (Pendidikan)</option>
+                        <option value="banking">Banking (Bank)</option>
+                        <option value="media">Media</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Website URL</label>
+                    <input type="url" class="form-input" id="partnerUrl" placeholder="https://example.com">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let partnersData = <%- JSON.stringify(partners) %>;
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function showAddModal() {
+            document.getElementById('modalTitle').textContent = 'Tambah Partner';
+            document.getElementById('partnerForm').reset();
+            document.getElementById('partnerId').value = '';
+            document.getElementById('partnerModal').classList.add('active');
+        }
+
+        function editPartner(id) {
+            const p = partnersData.find(x => x.id === id);
+            if (!p) return;
+            document.getElementById('modalTitle').textContent = 'Edit Partner';
+            document.getElementById('partnerId').value = p.id;
+            document.getElementById('partnerName').value = p.name;
+            document.getElementById('partnerCategory').value = p.category;
+            document.getElementById('partnerUrl').value = p.websiteUrl || '';
+            document.getElementById('partnerModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('partnerModal').classList.remove('active');
+        }
+
+        async function savePartner(e) {
+            e.preventDefault();
+            const id = document.getElementById('partnerId').value;
+            const data = {
+                name: document.getElementById('partnerName').value,
+                category: document.getElementById('partnerCategory').value,
+                websiteUrl: document.getElementById('partnerUrl').value
+            };
+
+            const response = await fetch(id ? `/api/partners/${id}` : '/api/partners', {
+                method: id ? 'PUT' : 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                showToast(id ? 'Partner diupdate!' : 'Partner ditambahkan!');
+                closeModal();
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showToast('Gagal menyimpan', 'error');
+            }
+        }
+
+        async function deletePartner(id) {
+            if (!confirm('Yakin hapus partner ini?')) return;
+            const response = await fetch(`/api/partners/${id}`, { method: 'DELETE' });
+            if (response.ok) {
+                showToast('Partner dihapus!');
+                document.querySelector(`tr[data-id="${id}"]`).remove();
+            } else {
+                showToast('Gagal menghapus', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

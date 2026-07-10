@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CERDAS BERKARAKTER - Platform Tatakelola Manajemen Pendidikan Masa Depan</title>
+    <meta name="description" content="Platform ERP manajemen pendidikan lengkap untuk sekolah, pesantren, kampus, dan bimbingan belajar. Dipercaya 650+ institusi di Indonesia.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- AOS Scroll Animation (inspired by pintro.id) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/variables.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/animations.css">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="navbar-inner">
+                <a href="#" class="navbar-logo">
+                    <img src="/assets/images/logo.png" alt="CERDAS BERKARAKTER" onerror="this.style.display='none'">
+                    <span>CERDAS<span style="color: var(--pink-400)">BERKARAKTER</span></span>
+                </a>
+
+                <div class="navbar-menu">
+                    <div class="navbar-dropdown">
+                        <a href="#modules" class="navbar-link">Fitur</a>
+                    </div>
+                    <a href="#why-us" class="navbar-link">Keunggulan</a>
+                    <a href="#ecosystem" class="navbar-link">Ekosistem</a>
+                    <a href="#testimonials" class="navbar-link">Testimoni</a>
+                    <a href="#pricing" class="navbar-link">Harga</a>
+                </div>
+
+                <div class="navbar-actions">
+                    <a href="#pricing" class="btn btn-secondary btn-sm hide-mobile" style="margin-right: 8px;">
+                        Minta Demo
+                    </a>
+                    <a href="https://wa.me/6281234567890" class="btn btn-whatsapp btn-sm">
+                        <i data-lucide="message-circle"></i>
+                        WhatsApp
+                    </a>
+                </div>
+
+                <button class="navbar-mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">
+            <i data-lucide="x"></i>
+        </button>
+        <div class="mobile-menu-links">
+            <a href="#modules" class="mobile-menu-link">Fitur</a>
+            <a href="#why-us" class="mobile-menu-link">Keunggulan</a>
+            <a href="#ecosystem" class="mobile-menu-link">Ekosistem</a>
+            <a href="#testimonials" class="mobile-menu-link">Testimoni</a>
+            <a href="#pricing" class="mobile-menu-link">Harga</a>
+
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-bg-shape hero-bg-shape-1"></div>
+            <div class="hero-bg-shape hero-bg-shape-2"></div>
+            <div class="hero-bg-shape hero-bg-shape-3"></div>
+        </div>
+
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        Platform ERP Manajemen Pendidikan
+                    </div>
+
+                    <h1 id="heroHeadline">
+                        Platform Tatakelola<br>
+                        <span>Manajemen Pendidikan</span><br>
+                        Masa Depan
+                    </h1>
+
+                    <p class="hero-subtitle" id="heroSubtitle">
+                        One Digital Platform Based on ERP - Solusi lengkap untuk sekolah, pesantren,
+                        kampus, dan bimbingan belajar dalam satu sistem terintegrasi.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#pricing" class="btn btn-primary btn-lg">
+                            <i data-lucide="play-circle"></i>
+                            Minta Demo Gratis
+                        </a>
+                        <a href="#modules" class="btn btn-secondary btn-lg">
+                            Pelajari Lebih Lanjut
+                        </a>
+                    </div>
+
+                    <div class="hero-stats" id="heroStats">
+                        <div class="hero-stat glass-card">
+                            <span class="hero-stat-value" data-count="650">0</span>
+                            <span class="hero-stat-label">Institusi</span>
+                        </div>
+                        <div class="hero-stat glass-card">
+                            <span class="hero-stat-value" data-count="17">0</span>
+                            <span class="hero-stat-label">Tahun</span>
+                        </div>
+                        <div class="hero-stat glass-card">
+                            <span class="hero-stat-value" data-count="1000000" data-suffix="+">0</span>
+                            <span class="hero-stat-label">Pengguna</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-phone-img">
+                        <img src="/assets/images/app-screenshot-v2.png" alt="App Screenshot" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Wave Divider -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#F9FAFB"/>
+        </svg>
+    </div>
+
+    <!-- Partners Section -->
+    <section class="section section-light" style="padding: var(--space-12) 0;">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up" data-aos-duration="700" style="margin-bottom: var(--space-8);">
+                <span class="section-label">Kepercayaan Institusi</span>
+                <p style="color: var(--gray-500); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-2);">
+                    Dipercaya oleh
+                </p>
+                <h3 style="font-size: 1.5rem;">650+ Institusi Pendidikan di Indonesia</h3>
+            </div>
+
+            <div class="partners-marquee" data-aos="fade-up" data-aos-delay="200">
+                <div class="partners-track" id="partnersTrack">
+                    <!-- Partners will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section class="section" id="modules">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up" data-aos-duration="700">
+                <span class="section-label">Solusi Inovatif</span>
+                <h2>Solusi Inovatif <span class="gradient-text">Mendisrupsi</span> Dunia Pendidikan</h2>
+                <p>Lihatlah bagaimana cara kami mengubah wajah sekolah menjadi lebih modern dengan solusi-solusi inovatif.</p>
+            </div>
+
+            <div class="modules-grid" id="modulesGrid">
+                <!-- Modules will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="section section-dark" id="why-us">
+        <div class="container">
+            <div class="section-header section-header-light" data-aos="fade-up" data-aos-duration="700">
+                <span class="section-label" style="background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9);">Keunggulan Kami</span>
+                <h2>Kenapa Memilih <span class="gradient-text">CERDAS BERKARAKTER</span>?</h2>
+                <p>Dengan pengalaman lebih dari 17 tahun, kami memahami kebutuhan institusi pendidikan Indonesia.</p>
+            </div>
+
+            <div class="why-grid" id="whyGrid">
+                <!-- Why us items will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section class="section section-light" id="ecosystem">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up" data-aos-duration="700">
+                <span class="section-label">Ekosistem Digital</span>
+                <h2>Ekosistem <span class="gradient-text">Terintegrasi</span></h2>
+                <p>Semua stakeholder terhubung dalam satu platform untuk pengalaman yang seamless.</p>
+            </div>
+
+            <div class="ecosystem-container" id="ecosystemGrid" data-aos="fade-up" data-aos-delay="200">
+                <!-- Ecosystem users will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up" data-aos-duration="700">
+                <span class="section-label">Testimonial</span>
+                <h2>Apa Kata <span class="gradient-text">Mereka</span>?</h2>
+                <p>Testimoni dari institusi yang telah menggunakan CERDAS BERKARAKTER.</p>
+            </div>
+
+            <div class="testimonials-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <!-- Testimonials will be loaded dynamically -->
+                </div>
+                <div class="testimonials-nav" id="testimonialsNav">
+                    <!-- Dots will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banking Partners -->
+    <section class="section section-gradient">
+        <div class="container">
+            <div class="text-center" data-aos="fade-up" data-aos-duration="700" style="margin-bottom: var(--space-8);">
+                <span class="section-label" style="background: rgba(255,255,255,0.2); color: #fff;">Mitra Pembayaran</span>
+                <h3 style="color: var(--white); margin-bottom: var(--space-2);">Didukung oleh Bank Besar Indonesia</h3>
+                <p style="color: rgba(255,255,255,0.8);">Integrasi pembayaran yang aman dan terpercaya</p>
+            </div>
+
+            <div class="partners-marquee" data-aos="fade-up" data-aos-delay="200" style="background: rgba(255,255,255,0.1); border-radius: var(--radius-xl); padding: var(--space-4);">
+                <div class="partners-track" id="bankingTrack">
+                    <!-- Banking partners will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Coverage -->
+    <section class="section section-light" id="media">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: var(--space-8);">
+                <p style="color: var(--gray-500); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-2);">
+                    Liputan Media
+                </p>
+                <h3>Telah Diliput oleh Media Terkemuka</h3>
+            </div>
+
+            <div class="partners-marquee">
+                <div class="partners-track" id="mediaTrack">
+                    <!-- Media partners will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- CTA Section -->
+    <section class="section section-gradient">
+        <div class="container text-center">
+            <span class="section-label" style="background: rgba(255,255,255,0.2); color: #fff;" data-aos="fade-up">Mulai Sekarang</span>
+            <h2 data-aos="fade-up" data-aos-delay="100" style="color: var(--white); margin-bottom: var(--space-4);">Siap Memulai Transformasi Digital?</h2>
+            <p data-aos="fade-up" data-aos-delay="200" style="color: rgba(255,255,255,0.9); font-size: 1.25rem; max-width: 600px; margin: 0 auto var(--space-8);">
+                Hubungi kami sekarang untuk konsultasi gratis dan demo produk.
+            </p>
+            <div data-aos="fade-up" data-aos-delay="300" style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+                <a href="https://wa.me/6281234567890" class="btn btn-whatsapp btn-lg">
+                    <i data-lucide="message-circle"></i>
+                    Chat WhatsApp
+                </a>
+                <a href="tel:+622112345678" class="btn btn-secondary btn-lg">
+                    <i data-lucide="phone"></i>
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-grid" id="footerGrid">
+                <!-- Footer content will be loaded dynamically -->
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2024 CERDAS BERKARAKTER. All Rights Reserved.
+                </p>
+                <div class="footer-legal">
+                    <a href="#">Kebijakan Privasi</a>
+                    <a href="#">Syarat & Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky WhatsApp -->
+    <a href="https://wa.me/6281234567890" class="sticky-wa" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initialize AOS (inspired by pintro.id scroll animations)
+        AOS.init({
+            duration: 700,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 80
+        });
+    </script>
+</body>
+</html>
