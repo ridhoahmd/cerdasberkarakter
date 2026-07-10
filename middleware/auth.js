@@ -5,7 +5,12 @@ const JWT_SECRET = process.env.JWT_SECRET || 'cerdasberkarakter-secret-key-2024'
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  let token = authHeader && authHeader.split(' ')[1];
+
+  // Fallback to session token for CMS routes that don't send Authorization header
+  if (!token && req.session && req.session.token) {
+    token = req.session.token;
+  }
 
   if (!token) {
     return res.status(401).json({ error: 'Access token required' });

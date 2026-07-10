@@ -207,12 +207,14 @@ router.put('/hero-stats/:id', authenticateToken, isAdmin, async (req, res) => {
 // Create Module
 router.post('/modules', authenticateToken, isAdmin, async (req, res) => {
   try {
-    const { title, description, icon, image, features, displayOrder } = req.body;
+    const { title, description, icon, image, color, badge, features, displayOrder } = req.body;
     const module = await Module.create({
       title,
       description,
       icon,
       image,
+      color: color || null,
+      badge: badge || null,
       features: features || [],
       displayOrder: displayOrder || 0
     });
@@ -227,7 +229,7 @@ router.post('/modules', authenticateToken, isAdmin, async (req, res) => {
 router.put('/modules/:id', authenticateToken, isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, icon, image, features, displayOrder, isActive } = req.body;
+    const { title, description, icon, image, color, badge, features, displayOrder, isActive } = req.body;
 
     const module = await Module.findByPk(id);
     if (!module) {
@@ -239,6 +241,8 @@ router.put('/modules/:id', authenticateToken, isAdmin, async (req, res) => {
       description,
       icon,
       image,
+      color,
+      badge,
       features,
       displayOrder,
       isActive

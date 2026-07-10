@@ -66,7 +66,7 @@ const initDB = async () => {
         {
           title: 'CBT Mobile',
           description: 'Ujian lebih aman & efisien dengan perangkat mobile',
-          icon: 'solar:iphone-line-duotone',
+          icon: 'smartphone',
           color: '#c73434',
           features: ['Ujian Online', 'Anti-Cheating', 'Hasil Realtime'],
           badge: 'PREMIUM',
@@ -76,7 +76,7 @@ const initDB = async () => {
         {
           title: 'LMS Online',
           description: 'Kegiatan pembelajaran daring lebih mudah dan cepat',
-          icon: 'solar:pen-new-square-line-duotone',
+          icon: 'pencil-line',
           color: '#2b74b6',
           features: ['Kelas Virtual', 'E-Tugas', 'E-Raport'],
           badge: 'PREMIUM',
@@ -86,7 +86,7 @@ const initDB = async () => {
         {
           title: 'Smart Attendance',
           description: 'Pantau kehadiran siswa secara realtime dari mana saja',
-          icon: 'solar:calendar-date-line-duotone',
+          icon: 'calendar-check',
           color: '#107759',
           features: ['Absen Realtime', 'Notif Orang Tua', 'Rekap Otomatis'],
           badge: 'PREMIUM',
@@ -96,7 +96,7 @@ const initDB = async () => {
         {
           title: 'Smart Bill',
           description: 'Kelola pembayaran siswa lebih efisien dengan sistem digital',
-          icon: 'solar:bill-list-line-duotone',
+          icon: 'receipt',
           color: '#d5a417',
           features: ['Multi Bank', 'Auto Tagihan', 'Rekonsiliasi'],
           badge: 'PREMIUM',
@@ -106,7 +106,7 @@ const initDB = async () => {
         {
           title: 'PPDB Online',
           description: 'Jangkau peserta didik baru lebih luas melalui internet',
-          icon: 'solar:user-plus-rounded-line-duotone',
+          icon: 'user-plus',
           color: '#2b74b6',
           features: ['Daftar Online', 'Seleksi Otomatis', 'Laporan Lengkap'],
           badge: 'PREMIUM',
@@ -117,7 +117,7 @@ const initDB = async () => {
         {
           title: 'ViPay',
           description: 'Bayar jajan gak perlu repot bawa uang cash',
-          icon: 'solar:wallet-2-line-duotone',
+          icon: 'wallet',
           color: '#d5a417',
           features: ['Dompet Digital', 'Limit Harian', 'Riwayat Belanja'],
           badge: 'FREE',
@@ -127,7 +127,7 @@ const initDB = async () => {
         {
           title: 'Website Sekolah',
           description: 'Update informasi & berita terbaru sekolah melalui website',
-          icon: 'solar:monitor-line-duotone',
+          icon: 'monitor',
           color: '#107759',
           features: ['CMS Mudah', 'SEO Friendly', 'Responsif'],
           badge: 'FREE',
@@ -137,7 +137,7 @@ const initDB = async () => {
         {
           title: 'Smart Card',
           description: 'Dapatkan kartu pelajar canggih & terintegrasi',
-          icon: 'solar:card-line-duotone',
+          icon: 'credit-card',
           color: '#c73434',
           features: ['Kartu Siswa', 'Akses Kontrol', 'Multi-Fungsi'],
           badge: 'FREE',
@@ -147,7 +147,7 @@ const initDB = async () => {
         {
           title: 'Whatsapp Gateway',
           description: 'Kelola pelayanan sekolah dengan whatsapp terpusat',
-          icon: 'solar:call-chat-line-duotone',
+          icon: 'message-circle',
           color: '#107759',
           features: ['Notif Otomatis', 'Broadcast', 'Multi-Admin'],
           badge: 'FREE',
@@ -157,7 +157,7 @@ const initDB = async () => {
         {
           title: 'ViDemy',
           description: 'Akses ratusan video pembelajaran dari guru terbaik',
-          icon: 'solar:notebook-minimalistic-line-duotone',
+          icon: 'book-open',
           color: '#c73434',
           features: ['Video HD', 'Playlist Mapel', 'Progress Tracking'],
           badge: 'FREE',
@@ -167,7 +167,7 @@ const initDB = async () => {
         {
           title: 'ViHub',
           description: 'Ruang diskusi online antar pelajar di seluruh dunia',
-          icon: 'solar:chat-round-call-line-duotone',
+          icon: 'message-square',
           color: '#d5a417',
           features: ['Forum Diskusi', 'Tanya Jawab', 'Komunitas Aktif'],
           badge: 'FREE',
@@ -177,7 +177,7 @@ const initDB = async () => {
         {
           title: 'Smart Controlling',
           description: 'Pantau aktifitas siswa & kelas secara realtime',
-          icon: 'solar:monitor-camera-line-duotone',
+          icon: 'video',
           color: '#2b74b6',
           features: ['CCTV Terintegrasi', 'Dashboard KBM', 'Pantau Realtime'],
           badge: 'FREE',

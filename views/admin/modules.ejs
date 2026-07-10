@@ -185,6 +185,18 @@
                     <input type="text" class="form-input" id="moduleIcon" placeholder="Contoh: user-plus, graduation-cap">
                 </div>
                 <div class="form-group">
+                    <label class="form-label">Warna (Kode Hex)</label>
+                    <input type="color" class="form-input" id="moduleColor" style="height: 40px; padding: 4px;" value="#3b82f6">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Badge</label>
+                    <select class="form-select" id="moduleBadge">
+                        <option value="">Tidak ada badge</option>
+                        <option value="PREMIUM">PREMIUM</option>
+                        <option value="FREE">FREE</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="form-label">Fitur (pisahkan dengan koma)</label>
                     <input type="text" class="form-input" id="moduleFeatures" placeholder="Fitur 1, Fitur 2, Fitur 3">
                 </div>
@@ -235,6 +247,8 @@
             document.getElementById('moduleTitle').value = mod.title;
             document.getElementById('moduleDescription').value = mod.description || '';
             document.getElementById('moduleIcon').value = mod.icon || '';
+            document.getElementById('moduleColor').value = mod.color || '#3b82f6';
+            document.getElementById('moduleBadge').value = mod.badge || '';
             document.getElementById('moduleFeatures').value = (mod.features || []).join(', ');
             document.getElementById('moduleActive').value = mod.isActive ? 'true' : 'false';
             document.getElementById('moduleModal').classList.add('active');
@@ -254,6 +268,8 @@
                 title: document.getElementById('moduleTitle').value,
                 description: document.getElementById('moduleDescription').value,
                 icon: document.getElementById('moduleIcon').value,
+                color: document.getElementById('moduleColor').value,
+                badge: document.getElementById('moduleBadge').value || null,
                 features: features,
                 isActive: document.getElementById('moduleActive').value === 'true',
                 displayOrder: 0
