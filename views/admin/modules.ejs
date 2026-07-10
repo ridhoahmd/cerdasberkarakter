@@ -278,13 +278,13 @@
             try {
                 let response;
                 if (id) {
-                    response = await fetch(`/api/modules/${id}`, {
+                    response = await fetch(`/apis/modules/${id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
                     });
                 } else {
-                    response = await fetch('/api/modules', {
+                    response = await fetch('/apis/modules', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(data)
@@ -307,7 +307,7 @@
             if (!confirm('Yakin ingin menghapus modul ini?')) return;
 
             try {
-                const response = await fetch(`/api/modules/${id}`, {
+                const response = await fetch(`/apis/modules/${id}`, {
                     method: 'DELETE'
                 });
                 if (response.ok) {

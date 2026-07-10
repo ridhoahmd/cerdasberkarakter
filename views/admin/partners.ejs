@@ -224,7 +224,7 @@
                 websiteUrl: document.getElementById('partnerUrl').value
             };
 
-            const response = await fetch(id ? `/api/partners/${id}` : '/api/partners', {
+            const response = await fetch(id ? `/apis/partners/${id}` : '/apis/partners', {
                 method: id ? 'PUT' : 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -241,7 +241,7 @@
 
         async function deletePartner(id) {
             if (!confirm('Yakin hapus partner ini?')) return;
-            const response = await fetch(`/api/partners/${id}`, { method: 'DELETE' });
+            const response = await fetch(`/apis/partners/${id}`, { method: 'DELETE' });
             if (response.ok) {
                 showToast('Partner dihapus!');
                 document.querySelector(`tr[data-id="${id}"]`).remove();

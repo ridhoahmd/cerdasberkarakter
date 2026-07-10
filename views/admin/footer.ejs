@@ -133,7 +133,7 @@
             const data = {
                 content: Object.fromEntries(formData)
             };
-            const response = await fetch('/api/footer/about', {
+            const response = await fetch('/apis/footer/about', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)

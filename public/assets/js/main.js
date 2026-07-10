@@ -10,7 +10,7 @@
   // Configuration
   // =============================================
   const CONFIG = {
-    apiBase: '/api',
+    apiBase: '/apis',
     animationDuration: 0.6,
     scrollOffset: 80,
     counterSpeed: 2000,

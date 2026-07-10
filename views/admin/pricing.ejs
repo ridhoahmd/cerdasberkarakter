@@ -252,7 +252,7 @@
                 isPopular: document.getElementById('pricingPopular').value === 'true'
             };
 
-            const response = await fetch(id ? `/api/pricing/${id}` : '/api/pricing', {
+            const response = await fetch(id ? `/apis/pricing/${id}` : '/apis/pricing', {
                 method: id ? 'PUT' : 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -269,7 +269,7 @@
 
         async function deletePricing(id) {
             if (!confirm('Yakin hapus paket ini?')) return;
-            const response = await fetch(`/api/pricing/${id}`, { method: 'DELETE' });
+            const response = await fetch(`/apis/pricing/${id}`, { method: 'DELETE' });
             if (response.ok) {
                 showToast('Paket dihapus!');
                 document.querySelector(`.pricing-card[data-id="${id}"]`).remove();

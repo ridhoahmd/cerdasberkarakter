@@ -152,7 +152,7 @@
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
-            const response = await fetch('/api/heroes/1', {
+            const response = await fetch('/apis/heroes/1', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)

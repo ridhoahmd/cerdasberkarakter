@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', indexRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
+app.use('/apis', apiRoutes);
 
 const startServer = async () => {
   try {

@@ -221,7 +221,7 @@
             };
 
             try {
-                const response = await fetch(id ? `/api/testimonials/${id}` : '/api/testimonials', {
+                const response = await fetch(id ? `/apis/testimonials/${id}` : '/apis/testimonials', {
                     method: id ? 'PUT' : 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -242,7 +242,7 @@
         async function deleteTestimonial(id) {
             if (!confirm('Yakin hapus testimoni ini?')) return;
             try {
-                const response = await fetch(`/api/testimonials/${id}`, { method: 'DELETE' });
+                const response = await fetch(`/apis/testimonials/${id}`, { method: 'DELETE' });
                 if (response.ok) {
                     showToast('Testimoni dihapus!');
                     document.querySelector(`.testimonial-card[data-id="${id}"]`).remove();
