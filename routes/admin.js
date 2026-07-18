@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { isAuthenticated } = require('../middleware/auth');
-const { Module, Testimonial, Partner, PricingPackage, Hero, HeroStat, WhyUs, EcosystemUser, FooterContent } = require('../models/index');
+const { Module, Testimonial, Partner, PricingPackage, Hero, HeroStat, WhyUs, EcosystemUser, FooterContent, SocialLink, Media, Setting } = require('../models/index');
 
 // Apply authentication middleware to all routes
 function requireAuth(req, res, next) {
@@ -51,7 +51,8 @@ router.get('/dashboard', requireAuth, async (req, res) => {
       hero,
       whyUs,
       ecosystem,
-      user: req.session
+      user: req.session,
+      activePage: 'dashboard'
     });
   } catch (error) {
     console.error('Dashboard error:', error);
@@ -61,32 +62,59 @@ router.get('/dashboard', requireAuth, async (req, res) => {
 
 router.get('/modules', requireAuth, async (req, res) => {
   const modules = await Module.findAll({ order: [['displayOrder', 'ASC']] });
-  res.render('admin/modules', { modules });
+  res.render('admin/modules', { modules, activePage: 'modules' });
 });
 
 router.get('/testimonials', requireAuth, async (req, res) => {
   const testimonials = await Testimonial.findAll({ order: [['displayOrder', 'ASC']] });
-  res.render('admin/testimonials', { testimonials });
+  res.render('admin/testimonials', { testimonials, activePage: 'testimonials' });
 });
 
 router.get('/partners', requireAuth, async (req, res) => {
   const partners = await Partner.findAll({ order: [['displayOrder', 'ASC']] });
-  res.render('admin/partners', { partners });
+  res.render('admin/partners', { partners, activePage: 'partners' });
 });
 
 router.get('/pricing', requireAuth, async (req, res) => {
   const pricing = await PricingPackage.findAll({ order: [['displayOrder', 'ASC']] });
-  res.render('admin/pricing', { pricing });
+  res.render('admin/pricing', { pricing, activePage: 'pricing' });
 });
 
 router.get('/hero', requireAuth, async (req, res) => {
   const hero = await Hero.findOne({ include: [{ model: HeroStat, as: 'stats' }] });
-  res.render('admin/hero', { hero });
+  res.render('admin/hero', { hero, activePage: 'hero' });
 });
 
 router.get('/footer', requireAuth, async (req, res) => {
   const footer = await FooterContent.findAll();
-  res.render('admin/footer', { footer });
+  res.render('admin/footer', { footer, activePage: 'footer' });
+});
+
+router.get('/why-us', requireAuth, async (req, res) => {
+  const items = await WhyUs.findAll({ order: [['displayOrder', 'ASC']] });
+  res.render('admin/whyus', { items, activePage: 'why-us' });
+});
+
+router.get('/ecosystem', requireAuth, async (req, res) => {
+  const items = await EcosystemUser.findAll({ order: [['displayOrder', 'ASC']] });
+  res.render('admin/ecosystem', { items, activePage: 'ecosystem' });
+});
+
+router.get('/social', requireAuth, async (req, res) => {
+  const items = await SocialLink.findAll({ order: [['displayOrder', 'ASC']] });
+  res.render('admin/social', { items, activePage: 'social' });
+});
+
+router.get('/media', requireAuth, async (req, res) => {
+  const items = await Media.findAll({ order: [['createdAt', 'DESC']] });
+  res.render('admin/media', { items, activePage: 'media' });
+});
+
+router.get('/settings', requireAuth, async (req, res) => {
+  const settingsArr = await Setting.findAll();
+  const settings = {};
+  settingsArr.forEach(s => { settings[s.key] = s.value; });
+  res.render('admin/settings', { settings, activePage: 'settings' });
 });
 
 module.exports = router;

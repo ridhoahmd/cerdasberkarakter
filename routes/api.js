@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const { User, Hero, HeroStat, Module, Testimonial, Partner, PricingPackage, SocialLink, FooterContent, Setting, WhyUs, EcosystemUser } = require('../models');
+const { User, Hero, HeroStat, Module, Testimonial, Partner, PricingPackage, SocialLink, FooterContent, Media, Setting, WhyUs, EcosystemUser } = require('../models');
 const { authenticateToken, isAdmin } = require('../middleware/auth');
 
 // Public Routes
@@ -582,6 +582,119 @@ router.get('/dashboard/stats', authenticateToken, async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// CRUD Social Links
+router.post('/social', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { platform, url, icon, displayOrder } = req.body;
+    const social = await SocialLink.create({ platform, url, icon, displayOrder: displayOrder || 0 });
+    res.status(201).json(social);
+  } catch (error) {
+    console.error('Error creating social link:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.put('/social/:id', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { platform, url, icon, displayOrder, isActive } = req.body;
+    const social = await SocialLink.findByPk(id);
+    if (!social) return res.status(404).json({ error: 'Not found' });
+    await social.update({ platform, url, icon, displayOrder, isActive });
+    res.json(social);
+  } catch (error) {
+    console.error('Error updating social link:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.delete('/social/:id', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const social = await SocialLink.findByPk(id);
+    if (!social) return res.status(404).json({ error: 'Not found' });
+    await social.destroy();
+    res.json({ message: 'Deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting social link:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Media Upload
+const multer = require('multer');
+const path = require('path');
+const crypto = require('crypto');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, path.join(__dirname, '..', 'public', 'uploads')),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const name = crypto.randomBytes(16).toString('hex') + ext;
+    cb(null, name);
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowed = /jpeg|jpg|png|gif|svg|webp|pdf/;
+    const ext = allowed.test(path.extname(file.originalname).toLowerCase());
+    const mime = allowed.test(file.mimetype);
+    if (ext && mime) return cb(null, true);
+    cb(new Error('File type not allowed'));
+  }
+});
+
+router.post('/media/upload', authenticateToken, isAdmin, upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const media = await Media.create({
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      mimeType: req.file.mimetype,
+      size: req.file.size,
+      url: '/uploads/' + req.file.filename,
+      uploadedBy: req.user?.id || null
+    });
+    res.status(201).json(media);
+  } catch (error) {
+    console.error('Error uploading media:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.delete('/media/:id', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const media = await Media.findByPk(id);
+    if (!media) return res.status(404).json({ error: 'Not found' });
+    const fs = require('fs');
+    const filePath = path.join(__dirname, '..', 'public', media.url);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    await media.destroy();
+    res.json({ message: 'Deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting media:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update Settings
+router.put('/settings', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const updates = req.body;
+    for (const [key, value] of Object.entries(updates)) {
+      await Setting.upsert({ key, value });
+    }
+    res.json({ message: 'Settings updated successfully' });
+  } catch (error) {
+    console.error('Error updating settings:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

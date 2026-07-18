@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head') %>
+    <title>Settings - CERDAS BERKARAKTER CMS</title>
+</head>
+<body>
+    <%- include('partials/sidebar', { activePage: 'settings' }) %>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <h1>Pengaturan Situs</h1>
+            <div style="display: flex; gap: 12px;">
+                <a href="/" target="_blank" class="btn btn-secondary"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div class="content-section">
+                <div class="section-header">
+                    <h2>Informasi Umum</h2>
+                    <p style="color: var(--gray-500); font-size: 0.875rem;">Pengaturan dasar website</p>
+                </div>
+                <form id="settingsForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label class="form-label">Nama Situs</label>
+                            <input type="text" class="form-input" name="siteName" value="<%= settings.siteName || '' %>" placeholder="CERDAS BERKARAKTER">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tagline</label>
+                            <input type="text" class="form-input" name="tagline" value="<%= settings.tagline || '' %>" placeholder="Solusi ERP Pendidikan Terlengkap">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" name="email" value="<%= settings.email || '' %>" placeholder="info@videaclass.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">WhatsApp Number</label>
+                            <input type="text" class="form-input" name="whatsapp" value="<%= settings.whatsapp || '' %>" placeholder="6281234567890">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Telepon</label>
+                            <input type="text" class="form-input" name="phone" value="<%= settings.phone || '' %>" placeholder="021-1234-5678">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Alamat</label>
+                            <input type="text" class="form-input" name="address" value="<%= settings.address || '' %>" placeholder="Jl. Contoh No. 123, Jakarta">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Logo URL</label>
+                        <input type="text" class="form-input" name="logo" value="<%= settings.logo || '' %>" placeholder="/assets/images/logo.png">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Favicon URL</label>
+                        <input type="text" class="form-input" name="favicon" value="<%= settings.favicon || '' %>" placeholder="/favicon.ico">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 16px;"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/toast') %>
+
+    <script>
+        document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch('/apis/settings', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    showToast('Pengaturan berhasil disimpan!');
+                } else {
+                    showToast('Gagal menyimpan pengaturan', 'error');
+                }
+            } catch (err) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

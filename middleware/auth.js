@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'cerdasberkarakter-secret-key-2024';
+if (!process.env.JWT_SECRET) {
+  throw new Error('❌ JWT_SECRET wajib diset di file .env! Jangan gunakan nilai default.');
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];

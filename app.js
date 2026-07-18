@@ -20,7 +20,12 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'cerdasberkarakter-session-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'strict',
+    maxAge: 24 * 60 * 60 * 1000
+  }
 }));
 
 app.set('view engine', 'ejs');
@@ -43,10 +48,7 @@ const startServer = async () => {
       console.log('╠═══════════════════════════════════════════════════════════╣');
       console.log(`║   Landing Page :  http://localhost:${PORT}                    ║`);
       console.log(`║   Admin CMS    :  http://localhost:${PORT}/admin              ║`);
-      console.log(`║   API Endpoint :  http://localhost:${PORT}/api              ║`);
-      console.log('║                                                           ║');
-      console.log('║   Login       :  admin@cerdasberkarakter.id               ║');
-      console.log('║   Password     :  admin123                                ║');
+      console.log(`║   API Endpoint :  http://localhost:${PORT}/apis              ║`);
       console.log('║                                                           ║');
       console.log('╚═══════════════════════════════════════════════════════════╝');
     });

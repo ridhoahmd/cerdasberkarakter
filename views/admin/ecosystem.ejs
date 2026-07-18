@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head') %>
+    <title>Ecosystem - CERDAS BERKARAKTER CMS</title>
+</head>
+<body>
+    <%- include('partials/sidebar', { activePage: 'ecosystem' }) %>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <h1>Kelola Ecosystem</h1>
+            <div style="display: flex; gap: 12px;">
+                <a href="/" target="_blank" class="btn btn-secondary"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
+                <button class="btn btn-primary" onclick="showAddModal()"><i class="fas fa-plus"></i> Tambah</button>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div class="content-section">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Ikon</th>
+                                <th>Nama</th>
+                                <th>Deskripsi</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <% items.forEach((item, index) => { %>
+                            <tr data-id="<%= item.id %>">
+                                <td><%= index + 1 %></td>
+                                <td><i class="fas fa-<%= item.icon || 'user' %>" style="font-size: 1.25rem; color: var(--purple-700);"></i></td>
+                                <td><strong><%= item.name %></strong></td>
+                                <td><%= item.description ? item.description.substring(0, 60) + (item.description.length > 60 ? '...' : '') : '-' %></td>
+                                <td><span class="badge <%= item.isActive ? 'badge-success' : 'badge-inactive' %>"><%= item.isActive ? 'Aktif' : 'Nonaktif' %></span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit" onclick="editItem(<%= item.id %>)" title="Edit"><i class="fas fa-edit"></i></button>
+                                        <button class="action-btn delete" onclick="deleteItem(<%= item.id %>)" title="Hapus"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="itemModal">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Tambah Ecosystem</h2>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="itemForm" onsubmit="saveItem(event)">
+                <input type="hidden" id="itemId">
+                <div class="form-group">
+                    <label class="form-label">Nama *</label>
+                    <input type="text" class="form-input" id="itemName" required placeholder="Contoh: Siswa">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Deskripsi</label>
+                    <textarea class="form-textarea" id="itemDescription" placeholder="Deskripsi singkat..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ikon (Font Awesome name)</label>
+                    <input type="text" class="form-input" id="itemIcon" placeholder="Contoh: user-graduate, school">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Urutan Tampil</label>
+                    <input type="number" class="form-input" id="itemOrder" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="itemActive">
+                        <option value="true">Aktif</option>
+                        <option value="false">Nonaktif</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('partials/toast') %>
+
+    <script>
+        let itemsData = <%- JSON.stringify(items) %>;
+
+        function showAddModal() {
+            document.getElementById('modalTitle').textContent = 'Tambah Ecosystem';
+            document.getElementById('itemForm').reset();
+            document.getElementById('itemId').value = '';
+            document.getElementById('itemOrder').value = 0;
+            document.getElementById('itemActive').value = 'true';
+            document.getElementById('itemModal').classList.add('active');
+        }
+
+        function editItem(id) {
+            const item = itemsData.find(x => x.id === id);
+            if (!item) return;
+            document.getElementById('modalTitle').textContent = 'Edit Ecosystem';
+            document.getElementById('itemId').value = item.id;
+            document.getElementById('itemName').value = item.name;
+            document.getElementById('itemDescription').value = item.description || '';
+            document.getElementById('itemIcon').value = item.icon || '';
+            document.getElementById('itemOrder').value = item.displayOrder || 0;
+            document.getElementById('itemActive').value = item.isActive ? 'true' : 'false';
+            document.getElementById('itemModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('itemModal').classList.remove('active');
+        }
+
+        async function saveItem(e) {
+            e.preventDefault();
+            const id = document.getElementById('itemId').value;
+            const data = {
+                name: document.getElementById('itemName').value,
+                description: document.getElementById('itemDescription').value,
+                icon: document.getElementById('itemIcon').value,
+                displayOrder: parseInt(document.getElementById('itemOrder').value) || 0,
+                isActive: document.getElementById('itemActive').value === 'true'
+            };
+
+            try {
+                const response = await fetch(id ? `/apis/ecosystem/${id}` : '/apis/ecosystem', {
+                    method: id ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    showToast(id ? 'Berhasil diupdate!' : 'Berhasil ditambahkan!');
+                    closeModal();
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showToast('Gagal menyimpan', 'error');
+                }
+            } catch (err) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        }
+
+        async function deleteItem(id) {
+            if (!confirm('Yakin ingin menghapus item ini?')) return;
+            try {
+                const response = await fetch(`/apis/ecosystem/${id}`, { method: 'DELETE' });
+                if (response.ok) {
+                    showToast('Berhasil dihapus!');
+                    document.querySelector(`tr[data-id="${id}"]`).remove();
+                } else {
+                    showToast('Gagal menghapus', 'error');
+                }
+            } catch (err) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

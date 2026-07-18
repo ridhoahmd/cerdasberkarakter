@@ -1,0 +1,84 @@
+<%
+    var activePage = typeof activePage !== 'undefined' ? activePage : '';
+%>
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <img src="/assets/images/logo.png" alt="Logo" onerror="this.style.display='none'">
+        <span class="sidebar-logo-text">CERDAS<span>BERKARAKTER</span></span>
+    </div>
+
+    <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+            <a href="/admin/dashboard" class="sidebar-nav-link <%= activePage === 'dashboard' ? 'active' : '' %>">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/hero" class="sidebar-nav-link <%= activePage === 'hero' ? 'active' : '' %>">
+                <i class="fas fa-image"></i> Hero Section
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-section-title">Konten</div>
+    <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+            <a href="/admin/modules" class="sidebar-nav-link <%= activePage === 'modules' ? 'active' : '' %>">
+                <i class="fas fa-puzzle-piece"></i> Modul
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/why-us" class="sidebar-nav-link <%= activePage === 'why-us' ? 'active' : '' %>">
+                <i class="fas fa-star"></i> Why Us
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/ecosystem" class="sidebar-nav-link <%= activePage === 'ecosystem' ? 'active' : '' %>">
+                <i class="fas fa-project-diagram"></i> Ecosystem
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/testimonials" class="sidebar-nav-link <%= activePage === 'testimonials' ? 'active' : '' %>">
+                <i class="fas fa-quote-left"></i> Testimoni
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/partners" class="sidebar-nav-link <%= activePage === 'partners' ? 'active' : '' %>">
+                <i class="fas fa-handshake"></i> Partner
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/pricing" class="sidebar-nav-link <%= activePage === 'pricing' ? 'active' : '' %>">
+                <i class="fas fa-tags"></i> Harga
+            </a>
+        </li>
+    </ul>
+
+    <div class="sidebar-section-title">Pengaturan</div>
+    <ul class="sidebar-nav">
+        <li class="sidebar-nav-item">
+            <a href="/admin/social" class="sidebar-nav-link <%= activePage === 'social' ? 'active' : '' %>">
+                <i class="fas fa-share-alt"></i> Social Links
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/media" class="sidebar-nav-link <%= activePage === 'media' ? 'active' : '' %>">
+                <i class="fas fa-photo-video"></i> Media
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/footer" class="sidebar-nav-link <%= activePage === 'footer' ? 'active' : '' %>">
+                <i class="fas fa-shoe-prints"></i> Footer
+            </a>
+        </li>
+        <li class="sidebar-nav-item">
+            <a href="/admin/settings" class="sidebar-nav-link <%= activePage === 'settings' ? 'active' : '' %>">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </li>
+    </ul>
+
+    <a href="/auth/logout" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+</aside>

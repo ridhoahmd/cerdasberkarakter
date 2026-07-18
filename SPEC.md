@@ -15,36 +15,47 @@ Modern gradient-based design dengan sentuhan futuristik education-tech. Terinspi
 
 ```css
 :root {
-  /* Primary Colors - Ungu */
-  --purple-900: #2D1B4E;
-  --purple-700: #4A2D7A;
-  --purple-600: #5B2D8E;
-  --purple-500: #7B4BA8;
+  /* Primary Colors - Red Pink */
+  --purple-900: #4a0920;
+  --purple-800: #6b0d2e;
+  --purple-700: #8e113c;
+  --purple-600: #b2164b;
+  --purple-500: #e11e62;
+  --purple-400: #e84d82;
 
   /* Accent Colors - Pink */
+  --pink-700: #C4276E;
   --pink-600: #D63384;
-  --pink-500: #E91E8C;
-  --pink-400: #FF6BAC;
+  --pink-500: #e11e62;
+  --pink-400: #e84d82;
+  --pink-300: #f07da6;
 
   /* Gradient Combinations */
-  --gradient-primary: linear-gradient(135deg, #4A2D7A 0%, #D63384 100%);
-  --gradient-hero: linear-gradient(180deg, #2D1B4E 0%, #1a0f2e 100%);
-  --gradient-card: linear-gradient(180deg, rgba(91, 45, 142, 0.1) 0%, rgba(230, 57, 132, 0.05) 100%);
+  --gradient-primary: linear-gradient(135deg, #b2164b 0%, #e11e62 100%);
+  --gradient-hero: linear-gradient(135deg, #0d0005 0%, #2a0112 45%, #8e0a3a 75%, #e11e62 100%);
+  --gradient-card: linear-gradient(180deg, rgba(225, 30, 98, 0.08) 0%, rgba(225, 30, 98, 0.03) 100%);
+  --gradient-text: linear-gradient(135deg, #7a0d32 0%, #c4175a 100%);
 
   /* Neutral Colors */
   --white: #FFFFFF;
   --gray-50: #F9FAFB;
   --gray-100: #F3F4F6;
   --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
   --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
   --gray-600: #4B5563;
+  --gray-700: #374151;
   --gray-800: #1F2937;
   --gray-900: #111827;
 
   /* Functional Colors */
   --success: #10B981;
+  --success-light: #D1FAE5;
   --warning: #F59E0B;
+  --error: #EF4444;
   --whatsapp: #25D366;
+  --whatsapp-dark: #128C7E;
 }
 ```
 
@@ -125,12 +136,11 @@ font-weight: 400;
 │ │ Animated stats (650+ Institusi, 17 Tahun, dll)      │ │
 │ └─────────────────────────────────────────────────────┘ │
 ├─────────────────────────────────────────────────────────┤
-│ MODULES GRID - 6 feature cards with hover animations   │
-│ [Penerimaan] [Siakad/LMS] [Kasir Digital]              │
-│ [Asrama] [Enterprise] [Sekolah Virtual]                 │
-├─────────────────────────────────────────────────────────┤
 │ SOCIAL PROOF - Auto-scrolling partner logos carousel    │
 │ "Dipercaya oleh 650+ Institusi Pendidikan"             │
+├─────────────────────────────────────────────────────────┤
+│ MODULES GRID - 12 feature cards with hover animations   │
+│ [5 PREMIUM] + [7 FREE]                                 │
 ├─────────────────────────────────────────────────────────┤
 │ WHY CERDAS BERKARAKTER - 4 key advantages              │
 │ [17 Tahun Pengalaman] [Whitelabel] [Cobrand] [ERP]      │
@@ -141,14 +151,11 @@ font-weight: 400;
 ├─────────────────────────────────────────────────────────┤
 │ TESTIMONIALS - Card carousel with photos                │
 ├─────────────────────────────────────────────────────────┤
-│ BANKING PARTNERS - 12+ bank logos                      │
+│ BANKING PARTNERS - 8+ bank logos                       │
 ├─────────────────────────────────────────────────────────┤
 │ MEDIA COVERAGE - News/media logos                       │
 ├─────────────────────────────────────────────────────────┤
-│ PRICING - 3 packages with feature comparison           │
-│ [Starter] [Scale (Popular)] [Premium]                   │
-├─────────────────────────────────────────────────────────┤
-│ VIDEO TUTORIALS - YouTube embeds                       │
+│ CTA - WhatsApp + Phone contact                          │
 ├─────────────────────────────────────────────────────────┤
 │ FOOTER - 4-column layout                                │
 │ [Logo + Deskripsi] [Produk] [Perusahaan] [Kontak]       │
@@ -516,73 +523,79 @@ GET    /api/dashboard/stats       (auth)
 ### File Structure
 
 ```
-cerdasberkarakter/
-├── landing-page/
-│   ├── index.html
-│   ├── css/
-│   │   ├── main.css
-│   │   ├── components.css
-│   │   ├── animations.css
-│   │   └── responsive.css
-│   ├── js/
-│   │   ├── main.js
-│   │   ├── animations.js
-│   │   └── components.js
+cerdasberkarakter-main/
+├── public/                         # Static assets (served directly)
+│   ├── landing.html                # Main landing page
+│   ├── favicon.ico
+│   ├── spt.ico
 │   ├── assets/
+│   │   ├── css/
+│   │   │   ├── variables.css       # CSS variables & color palette
+│   │   │   ├── components.css      # All component styles (nav, hero, cards, etc.)
+│   │   │   └── animations.css      # Scroll reveal animations & transitions
+│   │   ├── js/
+│   │   │   └── main.js             # Frontend JS (fetch, render, interactions)
 │   │   ├── images/
-│   │   ├── icons/
-│   │   └── fonts/
-│   └── data/
-│       └── content.json (fallback)
+│   │   │   ├── logo/               # Brand logos (full, white, icon variants)
+│   │   │   ├── hero/               # Hero phone mockup
+│   │   │   └── placeholder.png
+│   │   └── videos/                 # Video assets (e.g. phone mockup mp4)
+│   └── uploads/                    # User-uploaded files (gitignored)
 │
-├── cms/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   ├── services/
-│   │   └── context/
-│   ├── public/
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js
-│   └── tailwind.config.js
+├── views/                          # EJS templates (server-side rendered CMS)
+│   ├── admin/
+│   │   ├── login.ejs               # Admin login page
+│   │   ├── dashboard.ejs           # CMS dashboard overview
+│   │   ├── hero.ejs                # Hero section editor
+│   │   ├── modules.ejs             # Modules management
+│   │   ├── partners.ejs            # Partner logos management
+│   │   ├── testimonials.ejs        # Testimonials management
+│   │   └── pricing.ejs             # Pricing packages management
+│   │   └── footer.ejs              # Footer content editor
+│   │   └── whyus.ejs               # (planned) Why Us content editor
+│   │   └── ecosystem.ejs           # (planned) Ecosystem management
+│   │   └── social.ejs              # (planned) Social links management
+│   │   └── media.ejs               # (planned) Media library
+│   │   └── settings.ejs            # (planned) Site settings
 │
-├── api/
-│   ├── src/
-│   │   ├── index.js
-│   │   ├── config/
-│   │   │   └── database.js
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── middleware/
-│   │   ├── validators/
-│   │   └── utils/
-│   ├── package.json
-│   └── .env.example
+├── models/                         # Sequelize ORM models
+│   ├── database.js                 # Sequelize connection config
+│   ├── initDB.js                   # DB sync & seed data (force:true)
+│   └── index.js                    # All model definitions (User, Hero, Module, etc.)
 │
-├── database/
-│   ├── migrations/
-│   ├── seeders/
-│   └── schema.sql
+├── middleware/
+│   └── auth.js                     # JWT authentication middleware
 │
-├── docker-compose.yml
+├── routes/
+│   ├── index.js                    # Serves landing.html
+│   ├── admin.js                    # CMS admin routes (EJS)
+│   ├── api.js                      # Public + Protected REST API
+│   └── auth.js                     # Login/logout routes
+│
+├── scripts/                        # One-off utility scripts (gitignored)
+│   ├── force_color_update.js
+│   ├── migrate_badge.js
+│   ├── update_modules.js
+│   ├── screenshot_test.js
+│   └── test_browser.js
+│
+├── app.js                          # Main entry point (Express server)
 ├── package.json
-└── README.md
+├── deploy.sh                       # Deployment script (rsync + pm2)
+├── SPEC.md                         # This specification
+├── README.md
+└── .env                            # Environment variables (gitignored)
 ```
 
 ### Security
-- JWT token authentication with refresh tokens
+- JWT token authentication for API endpoints (admin CMS uses session-based auth)
 - Password hashing with bcrypt (12 rounds)
 - CORS configuration
-- Rate limiting on auth endpoints
-- Input sanitization
-- SQL injection prevention via parameterized queries
-- XSS prevention
-- File upload validation (type, size)
+- SQL injection prevention via Sequelize ORM (parameterized queries)
+- XSS prevention via EJS default escaping
+- File upload validation (planned: type, size)
+- **Missing**: Rate limiting, helmet security headers, CSRF protection, input validation library
+- **Missing**: connect-pg-simple session store (package installed but not configured)
 
 ---
 
@@ -599,16 +612,20 @@ cerdasberkarakter/
 
 ## 8. Deliverables Checklist
 
-- [ ] Landing Page HTML/CSS/JS with all sections
-- [ ] Animations (AOS/GSAP)
-- [ ] API Backend (Express + PostgreSQL)
-- [ ] Admin CMS Dashboard
-- [ ] Database migrations & seeders
+- [x] Landing Page HTML/CSS/JS with all sections
+- [x] Scroll reveal animations (CSS-based)
+- [x] API Backend (Express + PostgreSQL + Sequelize)
+- [x] Admin CMS Dashboard (EJS server-rendered)
+- [x] Database models & seed data
+- [x] JWT auth for API + Session auth for CMS
+- [x] Deployment script (rsync + pm2)
+- [ ] Admin pages: Why Us, Ecosystem, Social, Media, Settings
+- [ ] Security hardening (helmet, rate limiting, input validation)
+- [ ] EJS partials refactor (eliminate CSS/HTML duplication)
 - [ ] Documentation
-- [ ] Deployment guide
 
 ---
 
-**Document Version**: 1.0
+**Document Version**: 1.1
 **Created**: 2026-07-08
-**Last Updated**: 2026-07-08
+**Last Updated**: 2026-07-15

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <%- include('partials/head') %>
+    <title>Media - CERDAS BERKARAKTER CMS</title>
+    <style>
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .media-card { background: var(--gray-50); border-radius: 12px; border: 1px solid var(--gray-200); overflow: hidden; position: relative; }
+        .media-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+        .media-card-icon { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: var(--gray-100); color: var(--gray-500); font-size: 2.5rem; }
+        .media-card-info { padding: 12px; }
+        .media-card-name { font-size: 0.8rem; font-weight: 600; color: var(--gray-800); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .media-card-size { font-size: 0.75rem; color: var(--gray-500); margin-top: 4px; }
+        .media-card-actions { display: flex; gap: 6px; margin-top: 8px; }
+        .upload-area { border: 2px dashed var(--gray-300); border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 24px; cursor: pointer; transition: all 0.3s ease; }
+        .upload-area:hover { border-color: var(--purple-700); background: rgba(142, 17, 60, 0.02); }
+        .upload-area i { font-size: 2rem; color: var(--gray-400); margin-bottom: 12px; }
+        .upload-area p { color: var(--gray-500); font-size: 0.875rem; }
+        .upload-area .btn { margin-top: 12px; }
+    </style>
+</head>
+<body>
+    <%- include('partials/sidebar', { activePage: 'media' }) %>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <h1>Kelola Media</h1>
+            <div style="display: flex; gap: 12px;">
+                <a href="/" target="_blank" class="btn btn-secondary"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
+                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()"><i class="fas fa-upload"></i> Upload</button>
+            </div>
+        </div>
+
+        <div class="page-content">
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Klik atau seret file ke sini untuk upload</p>
+                <p style="font-size: 0.75rem; color: var(--gray-400); margin-top: 4px;">Maks 5MB | JPG, PNG, GIF, SVG, WebP</p>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;" multiple onchange="handleUpload(this.files)">
+            </div>
+
+            <div class="content-section">
+                <div class="section-header">
+                    <h2>Media Library (<%= items.length %>)</h2>
+                </div>
+                <div class="media-grid" id="mediaGrid">
+                    <% items.forEach(item => { %>
+                    <div class="media-card" data-id="<%= item.id %>">
+                        <% if (item.mimeType && item.mimeType.startsWith('image/')) { %>
+                        <img src="<%= item.url %>" alt="<%= item.altText || item.originalName || '' %>">
+                        <% } else { %>
+                        <div class="media-card-icon"><i class="fas fa-file"></i></div>
+                        <% } %>
+                        <div class="media-card-info">
+                            <div class="media-card-name" title="<%= item.originalName || item.filename %>"><%= item.originalName || item.filename %></div>
+                            <div class="media-card-size"><%= item.size ? (item.size / 1024).toFixed(1) + ' KB' : '-' %></div>
+                            <div class="media-card-actions">
+                                <button class="action-btn edit" onclick="copyUrl('<%= item.url %>')" title="Copy URL"><i class="fas fa-link"></i></button>
+                                <button class="action-btn delete" onclick="deleteItem(<%= item.id %>)" title="Hapus"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/toast') %>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--purple-700)';
+            uploadArea.style.background = 'rgba(142, 17, 60, 0.05)';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '';
+            uploadArea.style.background = '';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '';
+            uploadArea.style.background = '';
+            handleUpload(e.dataTransfer.files);
+        });
+
+        async function handleUpload(files) {
+            for (const file of files) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast(`${file.name} terlalu besar (maks 5MB)`, 'error');
+                    continue;
+                }
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    showToast(`Mengupload ${file.name}...`);
+                    const response = await fetch('/apis/media/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        showToast(`${file.name} berhasil diupload!`);
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        showToast(`Gagal upload ${file.name}`, 'error');
+                    }
+                } catch (err) {
+                    showToast(`Gagal upload ${file.name}`, 'error');
+                }
+            }
+        }
+
+        function copyUrl(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('URL berhasil dicopy!');
+            }).catch(() => {
+                prompt('Copy URL ini:', url);
+            });
+        }
+
+        async function deleteItem(id) {
+            if (!confirm('Yakin ingin menghapus file ini?')) return;
+            try {
+                const response = await fetch(`/apis/media/${id}`, { method: 'DELETE' });
+                if (response.ok) {
+                    showToast('Berhasil dihapus!');
+                    document.querySelector(`.media-card[data-id="${id}"]`).remove();
+                } else {
+                    showToast('Gagal menghapus', 'error');
+                }
+            } catch (err) {
+                showToast('Terjadi kesalahan', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

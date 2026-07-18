@@ -45,6 +45,12 @@
 [data-delay="400"] { transition-delay: 400ms; }
 [data-delay="500"] { transition-delay: 500ms; }
 [data-delay="600"] { transition-delay: 600ms; }
+[data-delay="700"] { transition-delay: 700ms; }
+[data-delay="800"] { transition-delay: 800ms; }
+[data-delay="900"] { transition-delay: 900ms; }
+[data-delay="1000"] { transition-delay: 1000ms; }
+[data-delay="1100"] { transition-delay: 1100ms; }
+[data-delay="1200"] { transition-delay: 1200ms; }
 
 /* Stagger Animation for Grid Items */
 .stagger-item {
